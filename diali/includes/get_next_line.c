@@ -62,9 +62,8 @@ char	*geti_line(char *line_b_chyata)
 	if (line_b_chyata[i] == '\n')
 	{
 		// line[i] = line_b_chyata[i];
-		i++;
+		line[i] = '\0';
 	}
-	line[i] = '\0';
 	return (line);
 }
 

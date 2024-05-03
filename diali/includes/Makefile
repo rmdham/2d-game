@@ -1,7 +1,9 @@
 NAME = so_long
 FLAGS = -Wall -Wextra -Werror
 MLXFLAGS =	-lmlx -framework OpenGL -framework AppKit
-SRC = ../source_file/so_long.c ../source_file/map.c get_next_line.c utils.c
+SRC = ../source_file/so_long.c ../source_file/map.c ../source_file/window.c  get_next_line.c utils.c 
+
+
 OBJ = *.o
 
 all: $(NAME)

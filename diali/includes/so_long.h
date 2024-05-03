@@ -12,31 +12,56 @@
 #include <stdbool.h>
 #include <string.h>
 
-typedef struct mlx_data
-{
-    void *wind;
-    void *mlx_inst;
-}           s_mlx_data;
+#define WINDOW mlx_new_window
+#define IMAGE mlx_put_image_to_window
+#define XPM mlx_xpm_file_to_image
+#define ON_DESTROY 17
+#define ESC 53
+#define W 13
+#define A 0
+#define S 1
+#define D 2
+
 
 typedef struct map
 {
-    char **maptiles;
-    int width;
-    int height;
-    int x;
-    int y; 
-    int Cplayer; 
-    int playerX;
-    int playerY;
-    int Exit;
-    int C;
+    void    *wind;
+    void    *mlx_ptr;
+    char    **maptiles;
+    int     width;
+    int     height;
+    int     x;
+    int     y; 
+    int     Cplayer; 
+    int     playerX;
+    int     playerY;
+    int     startX;
+    int     startY;
+    int     Exit;
+    int     C;
+    int     press;
+    int     key;
+    int     reached;
+    int     moves;
+    int     frame_counter;
+    void    *player_up;
+    void    *player_up1;
+    void    *player_rt;
+    void    *player_rt1;
+    void    *player_lf;
+    void    *player_lf1;
+    void    *player_dn;
+    void    *player_dn1;
+    void    *enemy;
+    void    *enemy1;
+    void    *collect;
+    void    *ground;
+    void    *wall;
+    void    *exit;
+    void    *exit1;
+
 }           t_map;
 
-typedef struct s_list
-{
-	char			*content;
-	struct s_list	*next;
-}	t_list;
 
 int     err_msg(char *s);
 int     mvalidialmap(t_map *dt);
@@ -54,6 +79,12 @@ int     ft_atoi(const char *str);
 char	*ft_strnstr(const char *str, const char *to_find, size_t len);
 void	initializer(t_map *dt);
 int     check_row(t_map *dt);
+int     set_game(t_map *dt);
+int     exit_game(t_map *dt, char *s);
+int     window_init(t_map *dt);
+int     draw_ground(t_map *dt);
+int     ft_key_hook(int keycode, t_map *data);
+void    fmove_player(t_map *dt);
 
 
 #endif
