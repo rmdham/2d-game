@@ -13,7 +13,7 @@ int check_element(t_map *dt)
         {
             if (dt->maptiles[i][j] != '1' && dt->maptiles[i][j] != '0' && \
                     dt->maptiles[i][j] != 'P' && dt->maptiles[i][j] != 'C' && \
-                    dt->maptiles[i][j] != 'E')
+                    dt->maptiles[i][j] != 'E' && dt->maptiles[i][j] != 'X')
                 return (0);
             j++;
         }
@@ -104,6 +104,21 @@ int mvalidiyinlwalls(char **map, t_map *dt)
 	return (0);
 }
 
+int dfss(t_map *data, int x, int y, int **visited)
+{
+    if (x < 0 || x >= data->height || y < 0 || y >= data->width || \
+            data->maptiles[x][y] == '1' || visited[x][y])
+        return (0);
+    if (data->maptiles[x][y] == 'C')
+        data->count--;
+    if (data->count == 0)
+        return (1);
+    visited[x][y] = 1;
+    if (dfss(data, x + 1, y, visited) || dfss(data, x - 1, y, visited) || \
+            dfss(data, x, y + 1, visited) || dfss(data, x, y - 1, visited))
+        return (1);
+    return (0);
+}
 
 int mvalidyatri9(t_map *dt)
 
@@ -131,6 +146,7 @@ int mvalidyatri9(t_map *dt)
         i++;
     }
     result = dfs(dt, dt->playerX, dt->playerY, visited);
+    printf("result = %d\n", result);
     i = 0;
     while (i < dt->height)
     {
@@ -138,6 +154,46 @@ int mvalidyatri9(t_map *dt)
         i++;
     }
     free(visited);
+    printf("result = %d\n", result);
+    return (result);
+}
+
+int mvalidyacoll(t_map *dt)
+
+{
+    int i;
+    int j;
+    int result;
+    int **visited;
+    dt->count = dt->C;
+
+    visited = malloc(sizeof(int *) * dt->height);
+    if (!visited)
+        return (0);
+    i = 0;
+    while (i < dt->height)
+    {
+        visited[i] = malloc(sizeof(int) * dt->width);
+        if (!visited[i])
+            return (0);
+        j = 0;
+        while (j < dt->width)
+        {
+            visited[i][j] = 0;
+            j++;
+        }
+        i++;
+    }
+    result = dfss(dt, dt->playerX, dt->playerY, visited);
+    printf("resul = %d\n", result);
+    i = 0;
+    while (i < dt->height)
+    {
+        free(visited[i]);
+        i++;
+    }
+    free(visited);
+    printf("result = %d\n", result);
     return (result);
 }
 
@@ -166,9 +222,7 @@ int mvalidialmap(t_map *dt)
     }
     if (!check_element(dt) || dt->Cplayer != 1 || dt->Exit != 1 || dt->C < 1 || \
 			!mvalidiyinlwalls(dt->maptiles, dt) || \
-			!mvalidyatri9(dt))
-{
+			!mvalidyatri9(dt) || !mvalidyacoll(dt))
         return (0);
-}
-    return  (1);
+    return (1);
 }

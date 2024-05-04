@@ -63,7 +63,8 @@ typedef struct map
     void    *exit;
     void    *exit1;
     int     counter;
-
+    int     count;
+    
 }           t_map;
 
 

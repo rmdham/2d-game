@@ -60,16 +60,16 @@ void    ft_playermovement(int keycode, t_map *dt)
 		dt->playerX = old_x;
 		dt->playerY = old_y;
 	}
-	else if (dt->maptiles[dt->playerY][dt->playerX] == 'X')
+	if (dt->maptiles[dt->playerY][dt->playerX] == 'X')
 		exit_game(dt, "You Lose");
-	else if (dt->maptiles[dt->playerY][dt->playerX] == 'C')
+	if (dt->maptiles[dt->playerY][dt->playerX] == 'C')
 	{
-		dt->collect--;
+		dt->C--;
 		dt->maptiles[dt->playerY][dt->playerX] = '0';
 		draw_ground(dt);
 	}
-	else if (dt->maptiles[dt->playerY][dt->playerX] == 'E' &&
-				dt->collect == 0)
+	if (dt->maptiles[dt->playerY][dt->playerX] == 'E' &&
+				dt->C == 0)
 		exit_game(dt, "You Won");
 	draw_ground(dt);
 	draw_game(dt);

@@ -63,43 +63,39 @@ int draw_ground(t_map *dt)
     }
     return (1);
 }
-// int draw_game(t_map *dt)
+
+
+
+// void enemy_patrol(t_map *d)
 // {
-//     if (dt->moves == 0)
-//     {
-//         IMAGE(dt->mlx_ptr, dt->wind, dt->player_dn, dt->playerX * 50, dt->playerY * 50);
+//     int count = 0;
+
+//         if (count < 2 && d->maptiles[d->x][d->y + 1] == '0')
+//         {
+//             d->maptiles[d->x][d->y] = '0';
+//             d->maptiles[d->x][d->y + 1] = 'X';
+//             usleep(100000);
+//             d->y++;
+            
+//             count++;
+//             if (d->maptiles[d->x][d->y + 1] == '1')
+//                 count = 2;
+//             if (d->maptiles[d->x][d->y + 1] == d->maptiles[d->playerY][d->playerX])
+//                 exit_game(d, "You Lose");
+//         }
+//         // if (count >= 2 && d->maptiles[d->x][d->y - 1] == '0')
+//         // {
+//         //     d->maptiles[d->x][d->y] = '0';
+//         //     d->maptiles[d->x][d->y - 1] = 'X';
+//         //     d->y--;
+//         //     usleep(100000);
+//         //     count++;
+//         //     if (d->maptiles[d->x][d->y - 1] == '1')
+//         //         count = 0;
+//         // }
+
 //     }
-//     if (dt->key == W)
-//     {
-//         if (dt->press == 0)
-//             IMAGE(dt->mlx_ptr, dt->wind, dt->player_up, dt->playerX * 50, dt->playerY * 50);
-//         else
-//             IMAGE(dt->mlx_ptr, dt->wind, dt->player_up1, dt->playerX * 50, dt->playerY * 50);
-//     }
-//     else if (dt->key == S)
-//     {
-//         if (dt->press == 0)
-//             IMAGE(dt->mlx_ptr, dt->wind, dt->player_dn, dt->playerX * 50, dt->playerY * 50);
-//         else
-//             IMAGE(dt->mlx_ptr, dt->wind, dt->player_dn1, dt->playerX * 50, dt->playerY * 50);
-//     }
-//     else if (dt->key == A)
-//     {
-//         if (dt->press == 0)
-//             IMAGE(dt->mlx_ptr, dt->wind, dt->player_lf, dt->playerX * 50, dt->playerY * 50);
-//         else
-//             IMAGE(dt->mlx_ptr, dt->wind, dt->player_lf1, dt->playerX * 50, dt->playerY * 50);
-//     }
-//     else if (dt->key == D)
-//     {
-//         if (dt->press == 0)
-//             IMAGE(dt->mlx_ptr, dt->wind, dt->player_rt, dt->playerX * 50, dt->playerY * 50);
-//         else
-//             IMAGE(dt->mlx_ptr, dt->wind, dt->player_rt1, dt->playerX * 50, dt->playerY * 50);
-//     }
-//     player_anime(dt);
-//     return (1);
-// }
+
 
 int	draw_game(t_map *d)
 {
@@ -109,23 +105,31 @@ int	draw_game(t_map *d)
 		d->y = 0;
 		while (d->y < d->width)
 		{
+            if (d->moves == 0)
+                IMAGE(d->mlx_ptr, d->wind, d->player_dn, d->playerX * TW, d->playerY * TH);
 			if (d->maptiles[d->x][d->y] == '0')
 				IMAGE(d->mlx_ptr, d->wind, d->ground, d->y * TW, d->x * TH);
 			else if (d->maptiles[d->x][d->y] == '1')
 				IMAGE(d->mlx_ptr, d->wind, d->wall, d->y * TW, d->x * TH);
 			else if (d->maptiles[d->x][d->y] == 'E')
-				IMAGE(d->mlx_ptr, d->wind, d->exit, d->y * TW, d->x * TH);
-			else if (d->maptiles[d->x][d->y] == 'C')
             {
-				IMAGE(d->mlx_ptr, d->wind, d->collect,d->y * TW, d->x * TH);
+                if (d->C != 0)
+                    IMAGE(d->mlx_ptr, d->wind, d->exit, d->y * TW, d->x * TH);
+                else
+                    IMAGE(d->mlx_ptr, d->wind, d->exit1, d->y * TW, d->x * TH);
             }
-			else if (d->maptiles[d->x][d->y] == 'X')
-				IMAGE(d->mlx_ptr, d->wind, d->enemy, d->y * TW, d->x * TH);
+			else if (d->maptiles[d->x][d->y] == 'C')
+				IMAGE(d->mlx_ptr, d->wind, d->collect,d->y * TW, d->x * TH);
+            else if (d->maptiles[d->x][d->y] == 'X')
+            {
+                IMAGE(d->mlx_ptr, d->wind, d->enemy, d->y * TW, d->x * TH);   
+            }
 			d->y++;
 		}
 		d->x++;
 	}
 	player_anime(d);
+    
 	return (1);
 }
 

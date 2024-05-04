@@ -5,7 +5,7 @@ void	anime_right(t_map *dt)
 	static int	j;
 
 	if (j <= 0)
-		j = 0;
+		j = 50;
 	j -= 5;
 	if (dt->frame_counter % 2 == 0)
 	{
@@ -31,7 +31,7 @@ void    anime_left(t_map *dt)
     static int	j;
 
     if (j <= 0)
-        j = 0;
+        j = 50;
     j -= 5;
     if (dt->frame_counter % 2 == 0)
     {
@@ -57,7 +57,7 @@ void    anime_up(t_map *dt)
     static int	j;
 
     if (j <= 0)
-        j = 0;
+        j = 50;
     j -= 5;
     if (dt->frame_counter % 2 == 0)
     {
@@ -84,7 +84,7 @@ void    anime_down(t_map *dt)
     static int	j;
 
     if (j <= 0)
-        j = 0;
+        j = 50;
     j -= 5;
     if (dt->frame_counter % 2 == 0)
     {
