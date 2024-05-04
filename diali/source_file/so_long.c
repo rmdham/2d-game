@@ -1,49 +1,113 @@
   #include    "../includes/so_long.h"
+void	move_right(t_map *dt)
+{
+	dt->playerX++;
+	dt->moves++;
+	dt->press = 1;
+	dt->reached = 0;
+	dt->key = D;
+}
+void	move_left(t_map *dt)
+{
+	dt->playerX--;
+	dt->moves++;
+	dt->press = 1;
+	dt->reached = 0;
+	dt->key = A;
+}
+void	move_up(t_map *dt)
+{
+	dt->playerY--;
+	dt->moves++;
+	dt->press = 1;
+	dt->reached = 0;
+	dt->key = W;
+}
+void	move_down(t_map *dt)
+{
+	dt->playerY++;
+	dt->moves++;
+	dt->press = 1;
+	dt->reached = 0;
+	dt->key = S;
+}
 
-// int key_hook(int keycode, s_mlx_data *data)
-// {
-//     if (keycode == 53)
-//     {
-//         printf("the %d key (ESC) has been pressed\n\n", keycode);
-//         mlx_destroy_window(data->mlx_inst, data->wind);
-//         free(data->mlx_inst);
-//         exit(1);
-//     }
-//     printf("the %d key has been pressed\n\n", keycode);
-//     return (0);
-// }
 
-// int main(void)
-// {
-//     s_mlx_data  data;
- 
-//  data.mlx_inst = mlx_init();
-//  if (NULL == data.mlx_inst)
-//     return (1);
-// data.wind = mlx_new_window(data.mlx_inst, 500, 1000, "So Long");
-// if (NULL == data.wind)
-// {
-//     mlx_destroy_window(data.mlx_inst,data.wind);
-//     free(data.mlx_inst);
-//     return  (1);
-// }
-// mlx_key_hook(data.wind,key_hook, &data);
-// int y = 1000 ;
-// while (y < 1000 -50)
-// {
-//     int x = 50;
-//     while (x < 500 - 50)
-//     {
-//         mlx_pixel_put(data.mlx_inst, data.wind, x, y , rand() % 0x1000000);
-//         x++;
-//     }
-//     y++;
-// }
-// mlx_loop(data.mlx_inst);
-// mlx_destroy_window(data.mlx_inst, data.wind);
-// free(data.mlx_inst);
+void	all_moves(int key, t_map *dt)
+{
+	if (key == D)
+		move_right(dt);
+	else if (key == A)
+		move_left(dt);
+	else if (key == W)
+		move_up(dt);
+	else if (key == S)
+		move_down(dt);
+}
 
-// }
+void    ft_playermovement(int keycode, t_map *dt)
+{
+	int	old_x;
+	int	old_y;
+	(void)keycode;
+
+	old_x = dt->playerX;
+	old_y = dt->playerY;
+	all_moves(keycode, dt);
+	if (dt->playerX < 0 || dt->playerX >= dt->width || dt->playerY < 0 || \
+		dt->playerY >= dt->height || dt->maptiles[dt->playerY][dt->playerX] == '1')
+	{
+		dt->playerX = old_x;
+		dt->playerY = old_y;
+	}
+	else if (dt->maptiles[dt->playerY][dt->playerX] == 'X')
+		exit_game(dt, "You Lose");
+	else if (dt->maptiles[dt->playerY][dt->playerX] == 'C')
+	{
+		dt->collect--;
+		dt->maptiles[dt->playerY][dt->playerX] = '0';
+		draw_ground(dt);
+	}
+	else if (dt->maptiles[dt->playerY][dt->playerX] == 'E' &&
+				dt->collect == 0)
+		exit_game(dt, "You Won");
+	draw_ground(dt);
+	draw_game(dt);
+}
+
+int ft_key_hook(int keycode, t_map *dt)
+{
+	if (dt->reached == 1)
+	{
+		if (keycode == W && dt->maptiles[dt->playerY - 1][dt->playerX] != '1')
+			ft_playermovement(W, dt);
+		else if (keycode == S && dt->maptiles[dt->playerY + 1][dt->playerX] != '1')
+			ft_playermovement(S, dt);
+		else if (keycode == A && dt->maptiles[dt->playerY][dt->playerX - 1] != '1')
+			ft_playermovement(A, dt);
+		else if (keycode == D && dt->maptiles[dt->playerY][dt->playerX + 1] != '1')
+			ft_playermovement(D, dt);
+		printf("Moves : %d\n", dt->moves);
+	}
+	if (keycode == ESC)
+		exit_game(dt, "You Exited Game");
+	return (0);
+}
+
+int	animation(t_map *dt)
+{
+	char	*n;
+
+	n = ft_itoa(dt->moves);
+	dt->frame_counter++;
+	draw_game(dt);
+	mlx_string_put(dt->mlx_ptr, dt->wind, 50, 50, 0xFFFF00, "Moves Number : ");
+	mlx_string_put(dt->mlx_ptr, dt->wind, 210, 50, 0xFFFF00, \
+						ft_itoa(dt->moves));
+	free(n);
+	return (0);
+}
+
 
 
 int	error_mssg(char *s )
@@ -60,21 +124,23 @@ int main(int argc, char **argv)
 
     dt.maptiles = NULL;
     if ((argc != 2) || !ft_strnstr(argv[1], ".ber",ft_strlen(argv[1])))
-        return  (err_msg("noooo maaap pls tryy again"));
-    printf("the map is %s\n", argv[1]);
+        return  (err_msg("arg error or missin file"));
     fd = open(argv[1],O_RDONLY);
     if (fd < 0)
         return  (err_msg("failed to open"));
-    printf("fd is %d\n", fd);
     line = get_next_line(fd);
     while (line)
     {
         dt.maptiles = addilmap(dt.maptiles, line);
         line = get_next_line(fd);
     }
-    for (int i = 0; dt.maptiles[i]; i++)
-        printf("%zu\n", strlen(dt.maptiles[i]));
-
+    if (!dt.maptiles)
+        return  (err_msg("no map"));
     if (!mvalidialmap(&dt) || !check_row(&dt))
-        return (err_msg("errrrreuuur"));
+        return (err_msg("invalid map or row"));
+    if (!window_init(&dt))
+        return (err_msg("failed to init window"));
+    free(dt.maptiles);
+    close(fd);
+    return (0);
 }

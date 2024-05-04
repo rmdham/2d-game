@@ -21,6 +21,8 @@
 #define A 0
 #define S 1
 #define D 2
+#define TW 50
+#define TH 50
 
 
 typedef struct map
@@ -44,6 +46,7 @@ typedef struct map
     int     reached;
     int     moves;
     int     frame_counter;
+    int     current_frame;  
     void    *player_up;
     void    *player_up1;
     void    *player_rt;
@@ -59,6 +62,7 @@ typedef struct map
     void    *wall;
     void    *exit;
     void    *exit1;
+    int     counter;
 
 }           t_map;
 
@@ -68,6 +72,12 @@ int     mvalidialmap(t_map *dt);
 char    **addilmap(char **map, char *newline);
 int     mvalidiyinlwalls(char **map, t_map *dt);
 int     mvalidyatri9(t_map *dt);
+char	*ft_itoa(int n);
+char	*ft_strdup(const char *s1);
+size_t	count_word_str(long nb);
+void	*allocation_str(size_t len);
+char	*if_zero(char *str);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*get_next_line(int fd);
 char	*ft_strjoin(char *line, char *buff);
 int		ft_strchr(char *s, int c);
@@ -84,7 +94,16 @@ int     exit_game(t_map *dt, char *s);
 int     window_init(t_map *dt);
 int     draw_ground(t_map *dt);
 int     ft_key_hook(int keycode, t_map *data);
-void    fmove_player(t_map *dt);
+void    ft_playermovement(int keycode, t_map *dt);
+void    player_anime(t_map *dt);
+void    anime_right(t_map *dt);
+void    anime_left(t_map *dt);
+void    anime_up(t_map *dt);
+void    anime_down(t_map *dt);
+int     draw_game(t_map *dt);
+int	    animation(t_map *dt);
+void	all_moves(int key, t_map *dt);
+
 
 
 #endif

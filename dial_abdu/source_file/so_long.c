@@ -72,9 +72,8 @@ int main(int argc, char **argv)
         dt.maptiles = addilmap(dt.maptiles, line);
         line = get_next_line(fd);
     }
-    for (int i = 0; dt.maptiles[i]; i++)
-        printf("%zu\n", strlen(dt.maptiles[i]));
-
+    if (!dt.maptiles)
+        return  (err_msg("no map"));
     if (!mvalidialmap(&dt) || !check_row(&dt))
         return (err_msg("errrrreuuur"));
 }

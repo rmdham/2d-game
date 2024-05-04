@@ -1,22 +1,38 @@
 #include    "../includes/so_long.h"
 
+int check_element(t_map *dt)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (dt->maptiles[i])
+    {
+        j = 0;
+        while (dt->maptiles[i][j])
+        {
+            if (dt->maptiles[i][j] != '1' && dt->maptiles[i][j] != '0' && \
+                    dt->maptiles[i][j] != 'P' && dt->maptiles[i][j] != 'C' && \
+                    dt->maptiles[i][j] != 'E')
+                return (0);
+            j++;
+        }
+        i++;
+    }
+    return (1);
+}
+
 int check_row(t_map *dt)
 {
     int i;
     size_t len;
 
-    for (int j = 0; dt->maptiles[j]; j++)
-        printf("%s\n", dt->maptiles[j]);
     len = strlen(dt->maptiles[0]);
     i = 0;
     while   (dt->maptiles[i])
     {
-        printf("len is %zu\n", len);
         if (strlen(dt->maptiles[i]) != len)
-        {
-            printf("manza\n");
             return (0);
-        }
         i++;
     }
     return (1);
@@ -58,7 +74,7 @@ int mvalidiyinlwalls(char **map, t_map *dt)
     while (map[0][i] && map[size - 1][i])
     {
         if (map[0][i] != '1' || map[size - 1][i] != '1')
-            return (1);
+            return (0);
         i++;
     }
     dt->width = i;
@@ -66,11 +82,11 @@ int mvalidiyinlwalls(char **map, t_map *dt)
     while (i < size)
     {
         if (map[i][0] != '1' || map[i][ft_strlen(map[0])-1] != '1')
-            return  (1);
+            return  (0);
         i++;
     }
     dt->height = i;
-    return  (0);
+    return  (1);
 }
   
   
@@ -148,11 +164,11 @@ int mvalidialmap(t_map *dt)
         }
         dt->x++;
     }
-    if (dt->Cplayer != 1 || dt->Exit != 1 || dt->C < 1 || \
+    if (!check_element(dt) || dt->Cplayer != 1 || dt->Exit != 1 || dt->C < 1 || \
 			!mvalidiyinlwalls(dt->maptiles, dt) || \
 			!mvalidyatri9(dt))
 {
-        return (1);
+        return (0);
 }
-    return  (0);
+    return  (1);
 }
