@@ -132,7 +132,7 @@ int mvalidyatri9(t_map *dt)
         }
         i++;
     }
-    result = dfs(dt, dt->playerX, dt->playerY, visited);
+    result = dfs(dt, dt->player_x, dt->player_y, visited);
     i = 0;
     while (i < dt->height)
     {
@@ -154,21 +154,21 @@ int mvalidialmap(t_map *dt)
         {
             if (dt->maptiles[dt->x][dt->y] == 'P')
             {
-                dt->Cplayer++;
-                dt->playerX = dt->x;
-                dt->playerY = dt->y;
+                dt->c_player++;
+                dt->player_x = dt->x;
+                dt->player_y = dt->y;
             }
             else if (dt->maptiles[dt->x][dt->y] == 'E')
-                dt->Exit++;
+                dt->exit++;
             else if (dt->maptiles[dt->x][dt->y] == 'C')
-                dt->C++;
+                dt->c++;
             dt->y++;
         }
         dt->x++;
     }
     int result = check_element(dt);
     printf("result is %d\n", result);
-    if (!check_element(dt) || dt->Cplayer != 1 || dt->Exit != 1 || dt->C < 1 || \
+    if (!check_element(dt) || dt->c_player != 1 || dt->exit != 1 || dt->c < 1 || \
 			!mvalidiyinlwalls(dt->maptiles, dt) || \
 			!mvalidyatri9(dt))    
 {

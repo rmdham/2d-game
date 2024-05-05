@@ -16,9 +16,9 @@ void	initializer(t_map *dt)
 {
 	dt->x = 0;
 	dt->y = 0;
-	dt->Cplayer = 0;
-	dt->Exit = 0;
-	dt->C = 0;
+	dt->c_player = 0;
+	dt->exit = 0;
+	dt->c = 0;
 }
 
 int err_msg(char *s)

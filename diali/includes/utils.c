@@ -6,26 +6,11 @@
 /*   By: ahamimsa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 02:52:59 by ahamimsa          #+#    #+#             */
-/*   Updated: 2024/01/24 02:53:57 by ahamimsa         ###   ########.fr       */
+/*   Updated: 2024/05/04 15:47:50 by ahamimsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	initializer(t_map *dt)
-{
-	dt->x = 0;
-	dt->y = 0;
-	dt->Cplayer = 0;
-	dt->Exit = 0;
-	dt->C = 0;
-}
-
-int err_msg(char *s)
-{
-    perror(s);
-    return(1);
-}
 
 size_t	ft_strlen(char *s)
 {
@@ -108,7 +93,6 @@ int	ft_atoi(const char *str)
 		result = (result * 10) + (str[i++] - '0');
 	return (result * sign);
 }
-
 
 char	*ft_strnstr(const char *str, const char *to_find, size_t len)
 {

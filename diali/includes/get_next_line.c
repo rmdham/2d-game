@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahamimsa <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/24 02:55:24 by ahamimsa          #+#    #+#             */
-/*   Updated: 2024/01/24 02:55:29 by ahamimsa         ###   ########.fr       */
+/*   Created: 2024/05/04 15:32:53 by ahamimsa          #+#    #+#             */
+/*   Updated: 2024/05/04 15:34:07 by ahamimsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	*geti_line(char *line_b_chyata)
 	}
 	if (line_b_chyata[i] == '\n')
 	{
-		// line[i] = line_b_chyata[i];
 		line[i] = '\0';
 	}
 	return (line);

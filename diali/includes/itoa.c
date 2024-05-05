@@ -1,4 +1,16 @@
-#include    "so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   itoa.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ahamimsa <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/04 15:35:16 by ahamimsa          #+#    #+#             */
+/*   Updated: 2024/05/04 15:35:32 by ahamimsa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
@@ -19,18 +31,6 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 		i++;
 	}
 	return (dest);
-}
-char	*ft_strdup(const char *s)
-{
-	char	*dup;
-	size_t	lenght;
-
-	lenght = ft_strlen((char *)s) + 1;
-	dup = malloc(sizeof(char) * lenght);
-	if (!dup)
-		return (NULL);
-	ft_memcpy(dup, s, lenght);
-	return (dup);
 }
 
 size_t	count_word_str(long nb)

@@ -25,11 +25,11 @@ typedef struct map
     int height;
     int x;
     int y; 
-    int Cplayer; 
-    int playerX;
-    int playerY;
-    int Exit;
-    int C;
+    int c_player; 
+    int player_x;
+    int player_y;
+    int exit;
+    int c;
 }           t_map;
 
 typedef struct s_list
