@@ -27,7 +27,7 @@ void	initializer2(t_map *dt)
 {
 	dt->x = 0;
 	dt->y = 0;
-    dt->counter = 0;
+	dt->counter = 0;
 	dt->press = 0;
 	dt->key = 5;
 	dt->reached = 1;

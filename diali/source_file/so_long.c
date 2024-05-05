@@ -107,7 +107,7 @@ int	main(int argc, char **argv)
 		return (err_msg("invalid map or row"));
 	if (!window_init(&dt))
 		return (err_msg("failed to init window"));
-	free(dt.maptiles);
+	ft_free(&dt);
 	close(fd);
 	return (0);
 }

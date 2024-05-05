@@ -104,7 +104,7 @@ char		*geti_line(char *line_b_chyata);
 int			ft_atoi(const char *str);
 char		*ft_strnstr(const char *str, const char *to_find, size_t len);
 void		initializer(t_map *dt);
-void			initializer2(t_map *dt);
+void		initializer2(t_map *dt);
 int			check_row(t_map *dt);
 int			set_game(t_map *dt);
 int			exit_game(t_map *dt, char *s);
@@ -121,5 +121,6 @@ int			draw_game(t_map *dt);
 int			animation(t_map *dt);
 void		all_moves(int key, t_map *dt);
 void		exit_anime(t_map *dt);
+void		ft_free(t_map *dt);
 
 #endif
