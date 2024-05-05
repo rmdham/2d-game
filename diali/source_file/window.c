@@ -76,20 +76,11 @@ int	draw_game(t_map *d)
 			else if (d->maptiles[d->x][d->y] == '1')
 				IMAGE(d->mlx_ptr, d->wind, d->wall, d->y * TW, d->x * TH);
 			else if (d->maptiles[d->x][d->y] == 'E')
-			{
-				if (d->c != 0)
-					IMAGE(d->mlx_ptr, d->wind, d->exit_pic, d->y * TW, d->x
-						* TH);
-				else
-					IMAGE(d->mlx_ptr, d->wind, d->exit1_pic, d->y * TW, d->x
-						* TH);
-			}
+				exit_anime(d);
 			else if (d->maptiles[d->x][d->y] == 'C')
 				IMAGE(d->mlx_ptr, d->wind, d->collect, d->y * TW, d->x * TH);
 			else if (d->maptiles[d->x][d->y] == 'X')
-			{
 				IMAGE(d->mlx_ptr, d->wind, d->enemy, d->y * TW, d->x * TH);
-			}
 			d->y++;
 		}
 		d->x++;

@@ -120,5 +120,6 @@ void		anime_down(t_map *dt);
 int			draw_game(t_map *dt);
 int			animation(t_map *dt);
 void		all_moves(int key, t_map *dt);
+void		exit_anime(t_map *dt);
 
 #endif
