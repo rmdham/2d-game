@@ -27,7 +27,6 @@ void	ft_free(t_map *dt)
 	int	i;
 
 	i = 0;
-	free(dt->maptiles);
 	while (i < dt->height)
 		free(dt->maptiles[i++]);
 	mlx_destroy_window(dt->mlx_ptr, dt->wind);
